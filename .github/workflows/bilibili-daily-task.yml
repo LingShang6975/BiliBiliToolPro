@@ -1,0 +1,24 @@
+name: Bilibili Daily Task
+on:
+  workflow_dispatch: # 允许手动触发
+  schedule:
+    - cron: '0 16 * * *' # 默认每天UTC 16:00（北京时间0点），建议修改避开整点
+
+jobs:
+  run-daily-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x' # 使用项目要求的 .NET 8
+
+      - name: Run Daily Task
+        working-directory: ./src/Ray.BiliBiliTool.Console
+        env:
+          # 将你在仓库 Secrets 中设置的 COOKIESTR 映射为程序所需的环境变量
+          Ray_BiliBiliCookies__1: ${{ secrets.COOKIESTR }}
+        run: dotnet run --runTasks=Daily
