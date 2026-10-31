@@ -21,4 +21,5 @@ jobs:
         env:
           # 将你在仓库 Secrets 中设置的 COOKIESTR 映射为程序所需的环境变量
           Ray_BiliBiliCookies__1: ${{ secrets.COOKIESTR }}
+          Ray_BiliBiliCookies__2: ${{ secrets.COOKIESTR2 }}
         run: dotnet run --runTasks=Daily
